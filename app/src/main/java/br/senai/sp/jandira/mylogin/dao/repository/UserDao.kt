@@ -24,4 +24,7 @@ interface UserDao {
     @Query("SELECT * FROM tbl_user WHERE email = :email")
     fun findUserByEmail(email: String): User
 
+    //funcao que busca no banco de dados o usuario correto
+    @Query("SELECT * FROM tbl_user WHERE email = :email AND password = :password")
+    fun authenticate(email: String, password: String): User
 }

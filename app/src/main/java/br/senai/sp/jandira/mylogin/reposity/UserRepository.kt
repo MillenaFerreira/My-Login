@@ -6,10 +6,14 @@ import br.senai.sp.jandira.mylogin.model.User
 
 class UserRepository(context: Context) {
 
-    //banco de dados
+    //criando a instancia do banco de dados
     private val db = TripDb.getDatabase(context)
 
     fun save(user: User): Long{
         return db.userDao().save(user)
+    }
+
+    fun findUserByEmail(email : String): User{
+        return db.userDao().findUserByEmail(email)
     }
 }
