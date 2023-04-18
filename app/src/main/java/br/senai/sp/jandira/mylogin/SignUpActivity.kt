@@ -1,20 +1,20 @@
 package br.senai.sp.jandira.mylogin
 
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material.icons.Icons
@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -41,6 +42,8 @@ import br.senai.sp.jandira.mylogin.components.TopShape
 import br.senai.sp.jandira.mylogin.model.User
 import br.senai.sp.jandira.mylogin.reposity.UserRepository
 import br.senai.sp.jandira.mylogin.ui.theme.MyLoginTheme
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import androidx.compose.material.CheckboxColors as CheckboxColors
 
 class SignUpActivity : ComponentActivity() {
@@ -75,6 +78,30 @@ fun LoginRegister() {
     }
 
     var context = LocalContext.current
+
+
+    //Obter foto da galeria de imagens
+    //variavel que vai guardar a uri
+    var photoUri by remember {
+        mutableStateOf<Uri?>(null)
+    }
+
+    //Criar o objeto que abrirá a galeria e retornará
+    //a URI da imagem selecionada
+
+    //lançar uma activity e vai retornar a uri selecionada
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ){
+        photoUri = it
+    }
+
+    // Coil = biblioteca de carregamento de imagem
+
+    var painter =rememberAsyncImagePainter(
+        ImageRequest.Builder(LocalContext.current).data(photoUri).build()
+    )
+
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -137,12 +164,11 @@ fun LoginRegister() {
                         )
                     ) {
                         Image(
-                            painter = painterResource(
-                                id = R.drawable.baseline_person_24
-                            ),
+                            painter = painter,
                             contentDescription = "",
-                            colorFilter = ColorFilter.tint(colorResource(id = R.color.pink_login)),
-                            modifier = Modifier.size(64.dp)
+                            //colorFilter = ColorFilter.tint(colorResource(id = R.color.pink_login)),
+                            modifier = Modifier.size(64.dp),
+                            contentScale = ContentScale.Crop
                         )
                     }
                     Image(
@@ -153,7 +179,10 @@ fun LoginRegister() {
                         modifier = Modifier
                             .align(alignment = Alignment.BottomEnd)
                             .offset(x = 5.dp, y = 5.dp)
-                            .size(28.dp),
+                            .size(28.dp)
+                            .clickable {
+                                       launcher.launch("image/*")
+                            },
                     )
 //                    Card(
 //                        modifier = Modifier
