@@ -100,7 +100,7 @@ fun Home(
 
                         )
                         Text(
-                            text = "Susanna Hoffs",
+                            text = stringResource(id = R.string.name_user),
                             color = Color.White,
                             fontSize = 12.sp,
                             fontWeight = FontWeight.W400
@@ -117,7 +117,7 @@ fun Home(
                                 tint = Color.White
                             )
                             Text(
-                                text = "You're in Paris",
+                                text = stringResource(id = R.string.your_in_paris),
                                 modifier = Modifier
                                     .padding(start = 3.dp),
                                 color = Color.White,
@@ -127,7 +127,7 @@ fun Home(
                         }
                         Column(modifier = Modifier.padding(start = 24.dp)) {
                             Text(
-                                text = "My Trips",
+                                text = stringResource(id = R.string.my_trips),
                                 color = Color.White,
                                 fontSize = 24.sp,
                                 fontWeight = FontWeight.W700
@@ -156,7 +156,7 @@ fun Home(
                     ) {
                         Column() {
                             Text(
-                                text = "Categories:",
+                                text = stringResource(id = R.string.categories),
                                 modifier = Modifier
                                     .padding(start = 17.dp)
                             )
@@ -184,8 +184,7 @@ fun Home(
                                                 ),
                                                 contentDescription = "",
                                                 modifier = Modifier
-                                                    .width(32.dp)
-                                                    .height(32.dp),
+                                                    .size(32.dp),
                                                 tint = Color.White
                                             )
                                             Text(
@@ -218,7 +217,11 @@ fun Home(
                                 ),
                             shape = RoundedCornerShape(16.dp),
                             label = {
-                                Text(text = "Search your destinity")
+                                Text(
+                                    text = stringResource(
+                                        id = R.string.search_your_destiny
+                                    )
+                                )
                             },
                             leadingIcon = {
                                 Icon(
@@ -241,7 +244,7 @@ fun Home(
                     ) {
                         Column() {
                             Text(
-                                text = "Past Trips",
+                                text = stringResource(id = R.string.past_trips),
                                 modifier = Modifier
                                     .padding(start = 17.dp)
                             )
